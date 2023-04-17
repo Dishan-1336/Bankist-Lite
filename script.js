@@ -47,7 +47,7 @@ const account2 = {
 };
 
 const account3 = {
-  owner: "Steven Thomas Williams",
+  owner: "Dishan Ahmed",
   movements: [200, -200, 340, -300, -20, 50, 400, -460],
   interestRate: 0.7,
   pin: 3333,
@@ -67,20 +67,40 @@ const account3 = {
 };
 
 const account4 = {
-  owner: "Sarah Smith",
-  movements: [430, 1000, 700, 50, 90],
+  owner: "Antu Chakrabarty",
+  movements: [430, 1000, 700, 50, 900, 750, -500],
+  interestRate: 1,
+  pin: 4444,
+
+  movementsDates: [
+    "2019-11-09T13:15:33.035Z",
+    "2019-11-30T09:48:16.867Z",
+    "2019-12-27T06:04:23.907Z",
+    "2020-01-25T14:18:46.235Z",
+    "2020-02-05T16:33:06.386Z",
+    "2020-04-14T14:43:26.374Z",
+    "2020-06-25T18:49:59.371Z",
+    "2020-07-27T12:01:20.894Z",
+  ],
+  currency: "USD",
+  locale: "en-US",
+};
+
+const account5 = {
+  owner: "Romel Rahman",
+  movements: [430, 1000, 700, 50, 90, -200],
   interestRate: 1,
   pin: 4444,
 
   movementsDates: [
     "2019-11-01T13:15:33.035Z",
-    "2019-11-30T09:48:16.867Z",
-    "2019-12-25T06:04:23.907Z",
+    "2019-11-21T09:48:16.867Z",
+    "2019-12-20T06:04:23.907Z",
     "2020-01-25T14:18:46.235Z",
-    "2020-02-05T16:33:06.386Z",
+    "2020-02-08T16:33:06.386Z",
     "2020-04-10T14:43:26.374Z",
-    "2020-06-25T18:49:59.371Z",
-    "2020-07-26T12:01:20.894Z",
+    "2020-06-29T18:49:59.371Z",
+    "2020-07-20T12:01:20.894Z",
   ],
   currency: "USD",
   locale: "en-US",
@@ -107,7 +127,7 @@ const btnLoan = document.querySelector(".form__btn--loan");
 const btnClose = document.querySelector(".form__btn--close");
 const btnSort = document.querySelector(".btn--sort");
 
-const inputLoginUsername = document.querySelector(".login__input--user");
+const inputLoginUsername = document.querySelector(".login__input--user"); // userrName = firstLetter of each word in small letter
 const inputLoginPin = document.querySelector(".login__input--pin");
 const inputTransferTo = document.querySelector(".form__input--to");
 const inputTransferAmount = document.querySelector(".form__input--amount");
@@ -238,7 +258,7 @@ let currentUser, timer;
 // ------------------------------- START LOGOUT TIMER --------------------------------------
 
 let startLogoutTimer = () => {
-  let time = 5000;
+  let time = 300;
   let tick = () => {
     let min = `${Math.trunc(time / 60)}`.padStart(2, 0);
     let sec = `${time % 60}`.padStart(2, 0);
@@ -329,6 +349,10 @@ btnTransfer.onclick = (event) => {
     return acc.userName === inputTransferTo.value;
   });
 
+  if (!receiverAccount) {
+    alert("Invalid User Name. Please write correct one!!!");
+  }
+
   if (transferAmount > 0 && Number(currentUser.balance) >= transferAmount) {
     currentUser.movements.push(-transferAmount);
     currentUser.movementsDates.push(date.toISOString());
@@ -340,7 +364,7 @@ btnTransfer.onclick = (event) => {
 
     updateData();
   } else {
-    alert("Invalid amount or, account");
+    alert("Invalid amount");
   }
 
   clearInterval(timer);
